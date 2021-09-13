@@ -1,7 +1,7 @@
 package com.posse.android.karaoke.presentation
 
 import com.posse.android.karaoke.view.IItemView
-import com.posse.android.karaoke.view.UserItemView
+import com.posse.android.karaoke.view.SongItemView
 
 interface IListPresenter<V : IItemView> {
 
@@ -10,4 +10,4 @@ interface IListPresenter<V : IItemView> {
     fun getCount(): Int
 }
 
-interface IUserListPresenter : IListPresenter<UserItemView>
+interface ISongListPresenter : IListPresenter<SongItemView>

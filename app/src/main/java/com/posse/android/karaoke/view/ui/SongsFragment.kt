@@ -5,26 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.posse.android.karaoke.model.GithubUsersRepo
-import com.posse.android.karaoke.presentation.UsersPresenter
+import com.posse.android.karaoke.model.SongsRepo
+import com.posse.android.karaoke.presentation.SongsPresenter
 import com.posse.android.karaoke.App
 import com.posse.android.karaoke.databinding.FragmentUsersBinding
 import com.posse.android.karaoke.view.BackButtonListener
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
-class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
+class SongsFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
 
     private var vb: FragmentUsersBinding? = null
 
     private val presenter by moxyPresenter {
-        UsersPresenter(
-            GithubUsersRepo(),
+        SongsPresenter(
+            SongsRepo(),
             App.instance.router
         )
     }
 
-    private val adapter by lazy { UsersRVAdapter(presenter.usersListPresenter) }
+    private val adapter by lazy { UsersRVAdapter(presenter.songsListPresenter) }
 
     override fun onCreateView(
         inflater: LayoutInflater,

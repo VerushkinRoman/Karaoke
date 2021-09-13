@@ -3,11 +3,11 @@ package com.posse.android.karaoke.view.ui
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.posse.android.karaoke.presentation.IUserListPresenter
+import com.posse.android.karaoke.presentation.ISongListPresenter
 import com.posse.android.karaoke.databinding.ItemUserBinding
-import com.posse.android.karaoke.view.UserItemView
+import com.posse.android.karaoke.view.SongItemView
 
-class UsersRVAdapter(private val presenter: IUserListPresenter) :
+class UsersRVAdapter(private val presenter: ISongListPresenter) :
     RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,11 +29,11 @@ class UsersRVAdapter(private val presenter: IUserListPresenter) :
     }
 
     class ViewHolder(private val vb: ItemUserBinding) : RecyclerView.ViewHolder(vb.root),
-        UserItemView {
+        SongItemView {
 
         override var pos: Int = -1
 
-        override fun showLogin(login: String) {
+        override fun showCaption(login: String) {
             vb.tvLogin.text = login
         }
     }
