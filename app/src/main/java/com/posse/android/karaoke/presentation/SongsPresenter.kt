@@ -5,6 +5,8 @@ import com.posse.android.karaoke.model.SongsRepo
 import com.posse.android.karaoke.screens.AndroidScreens
 import com.posse.android.karaoke.view.SongItemView
 import com.posse.android.karaoke.view.ui.SongsView
+import io.reactivex.rxjava3.core.Observer
+import io.reactivex.rxjava3.disposables.Disposable
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
 
@@ -48,9 +50,26 @@ class SongsPresenter(
     }
 
     private fun loadData() {
-        val songs = songsRepo.getSongs()
-        songsListPresenter.songs.addAll(songs)
-        viewState.updateList()
+        val songs = object : Observer<Song> {
+            lateinit var disposable: Disposable
+
+            override fun onSubscribe(d: Disposable) {
+                disposable = d
+            }
+
+            override fun onNext(t: Song) {
+                songsListPresenter.songs.add(t)
+            }
+
+            override fun onError(e: Throwable) {
+
+            }
+
+            override fun onComplete() {
+                viewState.updateList()
+            }
+        }
+        songsRepo.getSongs().subscribe(songs)
     }
 
     fun backPressed(): Boolean {

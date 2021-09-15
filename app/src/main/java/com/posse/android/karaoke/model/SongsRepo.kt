@@ -1,5 +1,6 @@
 package com.posse.android.karaoke.model
 
+import io.reactivex.rxjava3.core.Observable
 import java.util.*
 
 object SongsRepo {
@@ -22,7 +23,7 @@ object SongsRepo {
 
     fun getCurrentSong() = currentSong
 
-    fun getSongs() = songs
+    fun getSongs() = Observable.fromIterable(songs)
 
     private fun getID() = UUID.randomUUID().toString()
 }
