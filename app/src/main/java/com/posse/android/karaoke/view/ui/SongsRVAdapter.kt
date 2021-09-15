@@ -28,12 +28,20 @@ class SongsRVAdapter(private val presenter: ISongListPresenter) :
         presenter.bindView(holder.apply { pos = position })
     }
 
-    class ViewHolder(private val vb: ItemSongBinding) : RecyclerView.ViewHolder(vb.root), SongItemView {
+    class ViewHolder(private val vb: ItemSongBinding) : RecyclerView.ViewHolder(vb.root),
+        SongItemView {
 
         override var pos: Int = -1
+        override var id: String = ""
 
         override fun showCaption(caption: String) {
             vb.tvCaption.text = caption
+        }
+
+        override fun getID() = id
+
+        override fun setID(id: String) {
+            this.id = id
         }
     }
 }

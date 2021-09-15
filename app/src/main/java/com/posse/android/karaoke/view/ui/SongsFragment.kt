@@ -19,7 +19,7 @@ class SongsFragment : MvpAppCompatFragment(), SongsView, BackButtonListener {
 
     private val presenter by moxyPresenter {
         SongsPresenter(
-            SongsRepo(),
+            SongsRepo,
             App.instance.router
         )
     }
