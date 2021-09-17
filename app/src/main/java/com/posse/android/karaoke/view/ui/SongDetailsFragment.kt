@@ -1,12 +1,12 @@
 package com.posse.android.karaoke.view.ui
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.posse.android.karaoke.App
 import com.posse.android.karaoke.databinding.FragmentSongDetailsBinding
-import com.posse.android.karaoke.model.Song
 import com.posse.android.karaoke.presentation.SongDetailsPresenter
 import com.posse.android.karaoke.view.BackButtonListener
 import moxy.MvpAppCompatFragment
@@ -33,6 +33,11 @@ class SongDetailsFragment : MvpAppCompatFragment(), SongDetailsView,
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.loadingButton.setOnClickListener { presenter.backPressed() }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -46,8 +51,15 @@ class SongDetailsFragment : MvpAppCompatFragment(), SongDetailsView,
         binding.songCaption.text = caption
     }
 
-    override fun updateView(description: String) {
+    override fun updateDescription(description: String) {
         binding.songDescription.text = description
         binding.songDescription.visibility = View.VISIBLE
+    }
+
+    override fun updatePicture(picture: Bitmap) {
+        binding.songPicture.setImageBitmap(picture)
+        binding.songPicture.visibility = View.VISIBLE
+        binding.loadingLayout.visibility = View.GONE
+        binding.songLayout.visibility = View.VISIBLE
     }
 }

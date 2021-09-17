@@ -15,6 +15,8 @@ class SongsPresenter(
     private val router: Router
 ) : MvpPresenter<SongsView>() {
 
+    private var disposable: Disposable? = null
+
     class SongsListPresenter : ISongListPresenter {
 
         val songs = mutableListOf<Song>()
@@ -51,7 +53,6 @@ class SongsPresenter(
 
     private fun loadData() {
         val songs = object : Observer<Song> {
-            lateinit var disposable: Disposable
 
             override fun onSubscribe(d: Disposable) {
                 disposable = d
@@ -73,6 +74,7 @@ class SongsPresenter(
     }
 
     fun backPressed(): Boolean {
+        disposable?.dispose()
         router.exit()
         return true
     }

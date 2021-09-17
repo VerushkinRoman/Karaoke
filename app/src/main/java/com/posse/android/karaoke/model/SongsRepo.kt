@@ -23,7 +23,7 @@ object SongsRepo {
 
     fun getCurrentSong() = currentSong
 
-    fun getSongs() = Observable.fromIterable(songs)
+    fun getSongs(): Observable<Song> = Observable.fromIterable(songs)
 
     private fun getID() = UUID.randomUUID().toString()
 }
