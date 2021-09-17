@@ -2,15 +2,16 @@ package com.posse.android.karaoke.presentation
 
 import com.posse.android.karaoke.model.Song
 import com.posse.android.karaoke.model.SongsRepo
+import com.posse.android.karaoke.screens.AndroidScreens
 import com.posse.android.karaoke.view.SongItemView
-import com.posse.android.karaoke.view.ui.UsersView
+import com.posse.android.karaoke.view.ui.SongsView
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
 
 class SongsPresenter(
     private val songsRepo: SongsRepo,
     private val router: Router
-) : MvpPresenter<UsersView>() {
+) : MvpPresenter<SongsView>() {
 
     class SongsListPresenter : ISongListPresenter {
 
@@ -23,6 +24,7 @@ class SongsPresenter(
         override fun bindView(view: SongItemView) {
             val song = songs[view.pos]
             view.showCaption(song.caption)
+            view.setID(song.id)
         }
     }
 
@@ -35,7 +37,13 @@ class SongsPresenter(
         loadData()
 
         songsListPresenter.itemClickListener = { itemView ->
-            // todo
+            val currentId = itemView.getID()
+            songsListPresenter.songs.forEach {
+                if (it.id == currentId) {
+                    songsRepo.setCurrentSong(currentId)
+                    router.navigateTo(AndroidScreens.SongDetailsScreen())
+                }
+            }
         }
     }
 
