@@ -1,4 +1,4 @@
-package com.posse.android.karaoke.view.ui
+package com.posse.android.karaoke.screens.songDetails
 
 import android.graphics.Bitmap
 import moxy.MvpView
@@ -6,7 +6,7 @@ import moxy.viewstate.strategy.alias.AddToEnd
 
 @AddToEnd
 interface SongDetailsView : MvpView {
-    fun init(caption: String)
+    fun updateCaption(artist: String, track: String)
     fun updateDescription(description: String)
-    fun updatePicture(picture: Bitmap)
+    fun updatePicture(pictureUrl: String)
 }

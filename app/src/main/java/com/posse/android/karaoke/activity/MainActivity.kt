@@ -1,7 +1,9 @@
-package com.posse.android.karaoke
+package com.posse.android.karaoke.activity
 
 import android.os.Bundle
-import com.posse.android.karaoke.view.BackButtonListener
+import com.posse.android.karaoke.App
+import com.posse.android.karaoke.R
+import com.posse.android.karaoke.navigation.BackButtonListener
 import com.posse.android.karaoke.databinding.ActivityMainBinding
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
