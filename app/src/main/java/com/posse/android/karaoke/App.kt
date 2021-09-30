@@ -1,6 +1,7 @@
 package com.posse.android.karaoke
 
 import android.app.Application
+import com.posse.android.karaoke.model.db.SongsDatabase
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.Router
 
@@ -15,6 +16,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        SongsDatabase.create(this)
     }
 
     companion object {
