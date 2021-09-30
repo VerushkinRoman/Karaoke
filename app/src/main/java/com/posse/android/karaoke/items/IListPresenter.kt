@@ -1,7 +1,6 @@
-package com.posse.android.karaoke.presentation
+package com.posse.android.karaoke.items
 
-import com.posse.android.karaoke.view.IItemView
-import com.posse.android.karaoke.view.SongItemView
+import com.posse.android.karaoke.screens.songs.adapter.SongItemView
 
 interface IListPresenter<V : IItemView> {
 

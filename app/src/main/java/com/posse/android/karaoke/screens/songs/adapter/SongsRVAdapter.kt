@@ -1,14 +1,15 @@
-package com.posse.android.karaoke.view.ui
+package com.posse.android.karaoke.screens.songs.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.posse.android.karaoke.databinding.ItemSongBinding
-import com.posse.android.karaoke.presentation.ISongListPresenter
-import com.posse.android.karaoke.view.SongItemView
+import com.posse.android.karaoke.images.GlideImageLoader
+import com.posse.android.karaoke.items.ISongListPresenter
 
-class SongsRVAdapter(private val presenter: ISongListPresenter) :
-    RecyclerView.Adapter<SongsRVAdapter.ViewHolder>() {
+class SongsRVAdapter(
+    private val presenter: ISongListPresenter
+) : RecyclerView.Adapter<SongsRVAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -28,20 +29,14 @@ class SongsRVAdapter(private val presenter: ISongListPresenter) :
         presenter.bindView(holder.apply { pos = position })
     }
 
-    class ViewHolder(private val vb: ItemSongBinding) : RecyclerView.ViewHolder(vb.root),
+    inner class ViewHolder(private val vb: ItemSongBinding) : RecyclerView.ViewHolder(vb.root),
         SongItemView {
 
         override var pos: Int = -1
         override var id: String = ""
 
         override fun showCaption(caption: String) {
-            vb.tvCaption.text = caption
-        }
-
-        override fun getID() = id
-
-        override fun setID(id: String) {
-            this.id = id
+            vb.songCaption.text = caption
         }
     }
 }

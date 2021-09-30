@@ -1,4 +1,4 @@
-package com.posse.android.karaoke.view
+package com.posse.android.karaoke.items
 
 interface IItemView {
 

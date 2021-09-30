@@ -1,7 +1,11 @@
 package com.posse.android.karaoke.model
 
-class SongRepo {
-    private val description = "Some loaded song description"
+import com.posse.android.karaoke.remote.ApiHolder
+import io.reactivex.rxjava3.core.Single
 
-    fun getDescription(song: Song) = "$description ${song.caption}"
+class SongRepo {
+
+    fun getSong(artist: String, track: String): Single<Song> = ApiHolder
+        .apiService
+        .getSong(artist, track)
 }

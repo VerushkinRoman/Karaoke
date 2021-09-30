@@ -1,6 +1,6 @@
-package com.posse.android.karaoke
+package com.posse.android.karaoke.activity
 
-import com.posse.android.karaoke.screens.AndroidScreens
+import com.posse.android.karaoke.navigation.AndroidScreens
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
 

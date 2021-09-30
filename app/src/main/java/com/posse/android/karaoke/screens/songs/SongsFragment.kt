@@ -1,5 +1,6 @@
-package com.posse.android.karaoke.view.ui
+package com.posse.android.karaoke.screens.songs
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.posse.android.karaoke.App
 import com.posse.android.karaoke.databinding.FragmentSongsBinding
 import com.posse.android.karaoke.model.SongsRepo
-import com.posse.android.karaoke.presentation.SongsPresenter
-import com.posse.android.karaoke.view.BackButtonListener
+import com.posse.android.karaoke.navigation.BackButtonListener
+import com.posse.android.karaoke.screens.songs.adapter.SongsRVAdapter
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -19,7 +20,7 @@ class SongsFragment : MvpAppCompatFragment(), SongsView, BackButtonListener {
 
     private val presenter by moxyPresenter {
         SongsPresenter(
-            SongsRepo,
+            SongsRepo(),
             App.instance.router
         )
     }
@@ -41,6 +42,7 @@ class SongsFragment : MvpAppCompatFragment(), SongsView, BackButtonListener {
         vb?.rvSongs?.adapter = adapter
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun updateList() {
         adapter.notifyDataSetChanged()
     }

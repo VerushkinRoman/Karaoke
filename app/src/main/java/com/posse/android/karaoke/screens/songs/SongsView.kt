@@ -1,4 +1,4 @@
-package com.posse.android.karaoke.view.ui
+package com.posse.android.karaoke.screens.songs
 
 import moxy.MvpView
 import moxy.viewstate.strategy.alias.AddToEndSingle
