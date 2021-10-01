@@ -8,9 +8,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.posse.android.karaoke.App
 import com.posse.android.karaoke.databinding.FragmentSongsBinding
+import com.posse.android.karaoke.model.AllSongsRepoImpl
 import com.posse.android.karaoke.model.SongsRepo
+import com.posse.android.karaoke.model.db.SongsDatabase
 import com.posse.android.karaoke.navigation.BackButtonListener
 import com.posse.android.karaoke.screens.songs.adapter.SongsRVAdapter
+import com.posse.android.karaoke.utils.AndroidNetworkStatus
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -20,7 +23,10 @@ class SongsFragment : MvpAppCompatFragment(), SongsView, BackButtonListener {
 
     private val presenter by moxyPresenter {
         SongsPresenter(
-            SongsRepo(),
+            SongsRepo(
+                AndroidNetworkStatus(requireContext()),
+                AllSongsRepoImpl(SongsDatabase.getInstance())
+            ),
             App.instance.router
         )
     }

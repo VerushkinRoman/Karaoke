@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.posse.android.karaoke.databinding.ItemSongBinding
-import com.posse.android.karaoke.images.GlideImageLoader
 import com.posse.android.karaoke.items.ISongListPresenter
 
 class SongsRVAdapter(

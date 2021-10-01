@@ -6,24 +6,26 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class TopSongs(
-    @Expose val tracks: Tracks
+data class SingleSong(
+    @Expose val track: Track
 ) : Parcelable
 
 @Parcelize
-data class Tracks(
-    @SerializedName("track")
-    @Expose val songsList: List<Song>
-) : Parcelable
-
-@Parcelize
-data class Song(
+data class Track(
+    @Expose val album: Album,
     @Expose val artist: Artist,
     @Expose val duration: String,
     @Expose val name: String
 ) : Parcelable
 
 @Parcelize
-data class Artist(
-    @Expose val name: String,
+data class Album(
+    @Expose val image: List<AlbumImage>
+) : Parcelable
+
+@Parcelize
+data class AlbumImage(
+    @SerializedName("#text")
+    @Expose val pictureUrl: String,
+    @Expose val size: String
 ) : Parcelable

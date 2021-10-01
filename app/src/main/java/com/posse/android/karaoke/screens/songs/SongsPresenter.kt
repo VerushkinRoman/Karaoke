@@ -1,13 +1,13 @@
 package com.posse.android.karaoke.screens.songs
 
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import com.posse.android.karaoke.items.ISongListPresenter
+import com.posse.android.karaoke.model.Song
 import com.posse.android.karaoke.model.SongsRepo
-import com.posse.android.karaoke.model.TopSongs
 import com.posse.android.karaoke.navigation.AndroidScreens
 import com.posse.android.karaoke.screens.songs.adapter.SongItemView
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
 
@@ -18,7 +18,7 @@ class SongsPresenter(
 
     class SongsListPresenter : ISongListPresenter {
 
-        val songs = mutableListOf<TopSongs.Tracks.Song>()
+        val songs = mutableListOf<Song>()
 
         override var itemClickListener: ((SongItemView) -> Unit)? = null
 
@@ -27,7 +27,7 @@ class SongsPresenter(
         override fun bindView(view: SongItemView) {
             val song = songs[view.pos]
             view.showCaption("${song.name} - ${song.artist.name}")
-            view.id = song.name
+            view.id = song.artist.name + song.name
         }
     }
 
@@ -42,7 +42,7 @@ class SongsPresenter(
         songsListPresenter.itemClickListener = { itemView ->
             val currentId = itemView.id
             songsListPresenter.songs.forEach {
-                if (it.name == currentId) {
+                if (it.artist.name + it.name == currentId) {
                     router.navigateTo(AndroidScreens.SongDetailsScreen(it))
                 }
             }
@@ -50,16 +50,16 @@ class SongsPresenter(
     }
 
     private fun loadData() {
-        val handler = Handler(Looper.getMainLooper())
-        songsRepo.getSongs().subscribe({
-            songsListPresenter.songs.clear()
-            songsListPresenter.songs.addAll(it)
-            handler.post {
+        songsRepo.getSongs()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                songsListPresenter.songs.clear()
+                songsListPresenter.songs.addAll(it)
                 viewState.updateList()
-            }
-        }, {
-            it.message?.let { it1 -> Log.d("error", it1) }
-        })
+            }, {
+                it.message?.let { error -> Log.d("error", error) }
+            })
     }
 
     fun backPressed(): Boolean {
