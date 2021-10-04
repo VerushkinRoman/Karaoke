@@ -7,36 +7,41 @@ import com.posse.android.karaoke.navigation.BackButtonListener
 import com.posse.android.karaoke.databinding.ActivityMainBinding
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
+import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
+import javax.inject.Inject
 
 class MainActivity : MvpAppCompatActivity(), MainView {
+
+    @Inject
+    lateinit var navigatorHolder: NavigatorHolder
 
     private val navigator = SupportAppNavigator(this, R.id.container)
 
     private val presenter by moxyPresenter {
-        MainPresenter(App.instance.router)
+        App.instance.appComponent.presenter()
     }
 
-    private var _vb: ActivityMainBinding? = null
-
-    private val vb
-        get() = _vb!!
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        _vb = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(vb.root)
+        App.instance.appComponent.inject(this)
+
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
     override fun onResumeFragments() {
         super.onResumeFragments()
-        App.instance.navigationHolder.setNavigator(navigator)
+        navigatorHolder.setNavigator(navigator)
     }
 
     override fun onPause() {
         super.onPause()
-        App.instance.navigationHolder.removeNavigator()
+        navigatorHolder.removeNavigator()
     }
 
     override fun onBackPressed() {

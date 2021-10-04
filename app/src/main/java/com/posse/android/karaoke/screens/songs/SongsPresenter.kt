@@ -10,11 +10,15 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
+import javax.inject.Inject
 
-class SongsPresenter(
-    private val songsRepo: SongsRepo,
-    private val router: Router
-) : MvpPresenter<SongsView>() {
+class SongsPresenter : MvpPresenter<SongsView>() {
+
+    @Inject
+    lateinit var songsRepo: SongsRepo
+
+    @Inject
+    lateinit var router: Router
 
     class SongsListPresenter : ISongListPresenter {
 

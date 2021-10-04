@@ -5,8 +5,9 @@ import com.posse.android.karaoke.model.db.SongsDatabase
 import com.posse.android.karaoke.utils.convertRetrofitSongToRoomSong
 import com.posse.android.karaoke.utils.convertRoomSongToRetrofitSong
 import io.reactivex.rxjava3.core.Single
+import javax.inject.Inject
 
-class AllSongsRepoImpl(override val db: SongsDatabase) : AllSongsRepo {
+class AllSongsRepoImpl @Inject constructor(override val db: SongsDatabase) : AllSongsRepo {
 
     override fun getSongsList(songs: List<Song>): Single<List<Song>> {
         return Single.fromCallable {

@@ -8,7 +8,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 
-class GlideImageLoader : ImageLoader<ImageView> {
+class ImageLoaderImpl : ImageLoader<ImageView> {
 
     override fun loadTo(url: String, view: ImageView, callback: (Drawable?) -> Unit) {
         GlideApp.with(view.context)
