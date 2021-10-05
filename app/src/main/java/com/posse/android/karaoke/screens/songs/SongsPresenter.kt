@@ -5,6 +5,7 @@ import com.posse.android.karaoke.items.ISongListPresenter
 import com.posse.android.karaoke.model.Song
 import com.posse.android.karaoke.model.SongsRepo
 import com.posse.android.karaoke.navigation.AndroidScreens
+import com.posse.android.karaoke.navigation.PresenterDestroyListener
 import com.posse.android.karaoke.screens.songs.adapter.SongItemView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -19,6 +20,9 @@ class SongsPresenter : MvpPresenter<SongsView>() {
 
     @Inject
     lateinit var router: Router
+
+    @Inject
+    lateinit var listener: PresenterDestroyListener
 
     class SongsListPresenter : ISongListPresenter {
 
@@ -69,5 +73,10 @@ class SongsPresenter : MvpPresenter<SongsView>() {
     fun backPressed(): Boolean {
         router.exit()
         return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        listener.releaseScope(this)
     }
 }

@@ -1,11 +1,8 @@
 package com.posse.android.karaoke.model
 
-import com.posse.android.karaoke.model.db.SongsDatabase
 import io.reactivex.rxjava3.core.Single
 
 interface AllSongsRepo {
-
-    val db: SongsDatabase
 
     fun getSongsList(songs: List<Song>): Single<List<Song>>
     fun getOfflineSongsList(): Single<List<Song>>

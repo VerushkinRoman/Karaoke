@@ -9,14 +9,9 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-interface ImageModule {
+class ImageModule {
 
-    @Binds
-    fun imageLoader(impl: ImageLoaderImpl): ImageLoader<ImageView>
-
-    companion object{
-        @Provides
-        @Singleton
-        fun image() = ImageLoaderImpl()
-    }
+    @Provides
+    @Singleton
+    fun imageLoader(): ImageLoader<ImageView> = ImageLoaderImpl()
 }

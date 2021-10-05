@@ -3,6 +3,7 @@ package com.posse.android.karaoke.screens.songDetails
 import com.posse.android.karaoke.model.SingleSong
 import com.posse.android.karaoke.model.Song
 import com.posse.android.karaoke.model.SongRepo
+import com.posse.android.karaoke.navigation.PresenterDestroyListener
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.Disposable
@@ -20,6 +21,9 @@ class SongDetailsPresenter(
 
     @Inject
     lateinit var router: Router
+
+    @Inject
+    lateinit var listener: PresenterDestroyListener
 
     private var songDisposable: Disposable? = null
 
@@ -60,5 +64,10 @@ class SongDetailsPresenter(
         songDisposable?.dispose()
         router.exit()
         return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        listener.releaseScope(this)
     }
 }
