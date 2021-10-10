@@ -9,18 +9,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import com.posse.android.karaoke.App
 import com.posse.android.karaoke.databinding.FragmentSongDetailsBinding
-import com.posse.android.karaoke.images.GlideImageLoader
 import com.posse.android.karaoke.images.ImageLoader
-import com.posse.android.karaoke.model.AllSongsRepoImpl
 import com.posse.android.karaoke.model.Song
-import com.posse.android.karaoke.model.SongRepo
-import com.posse.android.karaoke.model.db.SongsDatabase
 import com.posse.android.karaoke.navigation.BackButtonListener
-import com.posse.android.karaoke.utils.AndroidNetworkStatus
 import com.posse.android.karaoke.utils.FilesystemWorker
-import com.posse.android.karaoke.utils.FilesystemWorkerImpl
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import javax.inject.Inject
 
 private const val KEY_SONG = "SONG"
 
@@ -29,18 +24,22 @@ class SongDetailsFragment : MvpAppCompatFragment(), SongDetailsView,
 
     private var _binding: FragmentSongDetailsBinding? = null
     private val binding get() = _binding!!
-    private val filesystem: FilesystemWorker = FilesystemWorkerImpl()
-    private val imageLoader: ImageLoader<ImageView> = GlideImageLoader()
+
+    @Inject
+    lateinit var filesystem: FilesystemWorker
+
+    @Inject
+    lateinit var imageLoader: ImageLoader<ImageView>
 
     private val presenter by moxyPresenter {
-        SongDetailsPresenter(
-            App.instance.router,
-            arguments?.getParcelable(KEY_SONG)!!,
-            SongRepo(
-                AndroidNetworkStatus(requireContext()),
-                AllSongsRepoImpl(SongsDatabase.getInstance())
-            )
-        )
+        SongDetailsPresenter(arguments?.getParcelable(KEY_SONG)!!).apply {
+            App.instance.appComponent.inject(this)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        App.instance.appComponent.inject(this)
     }
 
     override fun onCreateView(

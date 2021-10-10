@@ -1,22 +1,21 @@
 package com.posse.android.karaoke
 
 import android.app.Application
-import com.posse.android.karaoke.model.db.SongsDatabase
-import ru.terrakok.cicerone.Cicerone
-import ru.terrakok.cicerone.Router
+import com.posse.android.karaoke.di.modules.AppComponent
+import com.posse.android.karaoke.di.modules.AppModule
+import com.posse.android.karaoke.di.modules.DaggerAppComponent
 
 class App : Application() {
 
-    private val cicerone: Cicerone<Router> by lazy {
-        Cicerone.create()
-    }
-    val navigationHolder get() = cicerone.navigatorHolder
-    val router get() = cicerone.router
+    lateinit var appComponent: AppComponent
 
     override fun onCreate() {
         super.onCreate()
         instance = this
-        SongsDatabase.create(this)
+
+        appComponent = DaggerAppComponent.builder()
+            .appModule(AppModule(this))
+            .build()
     }
 
     companion object {

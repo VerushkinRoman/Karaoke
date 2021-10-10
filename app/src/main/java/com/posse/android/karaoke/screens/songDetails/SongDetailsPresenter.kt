@@ -9,12 +9,17 @@ import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
 import ru.terrakok.cicerone.Router
+import javax.inject.Inject
 
 class SongDetailsPresenter(
-    private val router: Router,
-    private val song: Song,
-    private val repo: SongRepo
+    private val song: Song
 ) : MvpPresenter<SongDetailsView>() {
+
+    @Inject
+    lateinit var repo: SongRepo
+
+    @Inject
+    lateinit var router: Router
 
     private var songDisposable: Disposable? = null
 

@@ -8,27 +8,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.posse.android.karaoke.App
 import com.posse.android.karaoke.databinding.FragmentSongsBinding
-import com.posse.android.karaoke.model.AllSongsRepoImpl
-import com.posse.android.karaoke.model.SongsRepo
-import com.posse.android.karaoke.model.db.SongsDatabase
 import com.posse.android.karaoke.navigation.BackButtonListener
 import com.posse.android.karaoke.screens.songs.adapter.SongsRVAdapter
-import com.posse.android.karaoke.utils.AndroidNetworkStatus
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
 class SongsFragment : MvpAppCompatFragment(), SongsView, BackButtonListener {
 
-    private var vb: FragmentSongsBinding? = null
+    private var _binding: FragmentSongsBinding? = null
+    private val binding get() = _binding!!
 
     private val presenter by moxyPresenter {
-        SongsPresenter(
-            SongsRepo(
-                AndroidNetworkStatus(requireContext()),
-                AllSongsRepoImpl(SongsDatabase.getInstance())
-            ),
-            App.instance.router
-        )
+        SongsPresenter().apply {
+            App.instance.appComponent.inject(this)
+        }
     }
 
     private val adapter by lazy { SongsRVAdapter(presenter.songsListPresenter) }
@@ -39,13 +32,13 @@ class SongsFragment : MvpAppCompatFragment(), SongsView, BackButtonListener {
         savedInstanceState: Bundle?
     ): View {
         return FragmentSongsBinding.inflate(inflater, container, false).also {
-            vb = it
+            _binding = it
         }.root
     }
 
     override fun init() {
-        vb?.rvSongs?.layoutManager = LinearLayoutManager(requireContext())
-        vb?.rvSongs?.adapter = adapter
+        binding.rvSongs.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvSongs.adapter = adapter
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -55,7 +48,7 @@ class SongsFragment : MvpAppCompatFragment(), SongsView, BackButtonListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        vb = null
+        _binding = null
     }
 
     override fun backPressed(): Boolean {
