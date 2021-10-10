@@ -13,11 +13,11 @@ import com.posse.android.karaoke.images.ImageLoader
 import com.posse.android.karaoke.model.Song
 import com.posse.android.karaoke.navigation.BackButtonListener
 import com.posse.android.karaoke.utils.FilesystemWorker
+import com.posse.android.karaoke.utils.FragmentInitializer
+import com.posse.android.karaoke.utils.initParams
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
-
-private const val KEY_SONG = "SONG"
 
 class SongDetailsFragment : MvpAppCompatFragment(), SongDetailsView,
     BackButtonListener {
@@ -31,9 +31,12 @@ class SongDetailsFragment : MvpAppCompatFragment(), SongDetailsView,
     @Inject
     lateinit var imageLoader: ImageLoader<ImageView>
 
+    private val song by initParams<Song>()
+
     private val presenter by moxyPresenter {
-        SongDetailsPresenter(arguments?.getParcelable(KEY_SONG)!!).apply {
-            App.instance.appComponent.inject(this)
+        App.instance.initSongSubcomponent()
+        SongDetailsPresenter(song).apply {
+            App.instance.songSubcomponent?.inject(this)
         }
     }
 
@@ -88,13 +91,5 @@ class SongDetailsFragment : MvpAppCompatFragment(), SongDetailsView,
         }
     }
 
-    companion object {
-
-        @JvmStatic
-        fun newInstance(song: Song) = SongDetailsFragment().apply {
-            arguments = Bundle().apply {
-                putParcelable(KEY_SONG, song)
-            }
-        }
-    }
+    companion object : FragmentInitializer<Song>
 }
