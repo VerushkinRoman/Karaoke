@@ -3,8 +3,6 @@ package com.posse.android.karaoke.di.modules
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.posse.android.karaoke.model.AllSongsRepo
-import com.posse.android.karaoke.model.AllSongsRepoImpl
 import com.posse.android.karaoke.remote.ApiHolder
 import com.posse.android.karaoke.remote.IApiHolder
 import com.posse.android.karaoke.remote.LastFMService
@@ -24,9 +22,6 @@ interface ApiModule {
 
     @Binds
     fun apiHolder(impl: ApiHolder): IApiHolder
-
-    @Binds
-    fun allSongsRepo(impl: AllSongsRepoImpl): AllSongsRepo
 
     companion object {
 

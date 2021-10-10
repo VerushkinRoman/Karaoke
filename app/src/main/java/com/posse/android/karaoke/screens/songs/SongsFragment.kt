@@ -19,8 +19,9 @@ class SongsFragment : MvpAppCompatFragment(), SongsView, BackButtonListener {
     private val binding get() = _binding!!
 
     private val presenter by moxyPresenter {
+        App.instance.initSongsSubcomponent()
         SongsPresenter().apply {
-            App.instance.appComponent.inject(this)
+            App.instance.songsSubcomponent?.inject(this)
         }
     }
 
