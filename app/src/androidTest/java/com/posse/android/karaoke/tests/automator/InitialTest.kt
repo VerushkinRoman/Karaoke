@@ -14,8 +14,6 @@ class InitialTest {
 
     private val context = ApplicationProvider.getApplicationContext<Context>()
 
-    private val packageName = context.packageName
-
     @Test
     fun test_DeviceNotNull() {
         val uiDevice: UiDevice = UiDevice.getInstance(getInstrumentation())
