@@ -15,8 +15,6 @@ import org.junit.runner.RunWith
 @SdkSuppress(minSdkVersion = 18)
 class OpenOtherAppsTest {
 
-    private val uiDevice: UiDevice = UiDevice.getInstance(getInstrumentation())
-
     @Test
     fun test_OpenSettings() {
         uiDevice.pressHome()
@@ -32,12 +30,12 @@ class OpenOtherAppsTest {
         //appViews.setAsHorizontalList()
 
         val settingsApp =
-            appViews.getChildByText(UiSelector().className(TextView::class.java.name), "Настройки")
+            appViews.getChildByText(UiSelector().className(TextView::class.java.name), SETTINGS)
 
         settingsApp.clickAndWaitForNewWindow()
 
         val settingsValidation =
-            uiDevice.findObject(UiSelector().packageName("com.android.settings"))
+            uiDevice.findObject(UiSelector().packageName(SETTINGS_PACKAGE))
 
         Assert.assertTrue(settingsValidation.exists())
     }

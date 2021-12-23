@@ -21,11 +21,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class BehaviorTest {
 
-    private val uiDevice: UiDevice = UiDevice.getInstance(getInstrumentation())
-
     private val context = ApplicationProvider.getApplicationContext<Context>()
-
-    private val packageName = context.packageName
 
     @Before
     fun setup() {
@@ -47,19 +43,19 @@ class BehaviorTest {
 
     @Test
     fun test_SearchIsPositive() {
-        val text = uiDevice.wait(Until.findObject(By.res(packageName, "songCaption")), TIMEOUT)
+        val text = uiDevice.wait(Until.findObject(By.res(packageName, SONG_CAPTION)), TIMEOUT)
         Assert.assertNotNull(text)
     }
 
     @Test
     fun test_OpenSongScreen() {
-        val songsText = uiDevice.wait(Until.findObject(By.res(packageName, "songCaption")), TIMEOUT)
+        val songsText = uiDevice.wait(Until.findObject(By.res(packageName, SONG_CAPTION)), TIMEOUT)
         songsText.click()
-        val songDescription = uiDevice.wait(Until.findObject(By.res(packageName, "songCaption")), TIMEOUT)
+        val songDescription = uiDevice.wait(Until.findObject(By.res(packageName, SONG_CAPTION)), TIMEOUT)
         Assert.assertNotNull(songDescription)
     }
 
     companion object {
-        private const val TIMEOUT = 5000L
+        private const val SONG_CAPTION = "songCaption"
     }
 }
